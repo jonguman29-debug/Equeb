@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Create Account | Equb</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #111827, #243b55);
+    }
+
+    .box {
+      width: 100%;
+      max-width: 430px;
+      background: white;
+      padding: 35px 25px;
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(0,0,0,.25);
+    }
+
+    h1 {
+      text-align: center;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #667085;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 16px;
+      border: 1px solid #d0d5dd;
+      border-radius: 9px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #f5b942;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 9px;
+      background: #f5b942;
+      color: #111827;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 20px;
+      color: #667085;
+    }
+
+    .link a {
+      color: #111827;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+
+    <h1>💰 Equb</h1>
+
+    <p class="subtitle">
+      Create your Digital Equb account
+    </p>
+
+    <form id="registerForm">
+
+      <label for="name">
+        Full Name
+      </label>
+
+      <input
+        type="text"
+        id="name"
+        placeholder="Enter your full name"
+        required
+      >
+
+      <label for="email">
+        Email
+      </label>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        required
+      >
+
+      <label for="password">
+        Password
+      </label>
+
+      <input
+        type="password"
+        id="password"
+        placeholder="At least 6 characters"
+        minlength="6"
+        required
+      >
+
+      <label for="confirmPassword">
+        Confirm Password
+      </label>
+
+      <input
+        type="password"
+        id="confirmPassword"
+        placeholder="Enter password again"
+        minlength="6"
+        required
+      >
+
+      <button
+        type="submit"
+        id="registerBtn">
+        Create Account
+      </button>
+
+      <div id="message"></div>
+
+    </form>
+
+    <div class="link">
+      Already have an account?
+      <a href="login.html">
+        Login
+      </a>
+    </div>
+
+    <div class="link">
+      <a href="index.html">
+        ← Back to Home
+      </a>
+    </div>
+
+  </div>
+
+
+  <script type="module">
+
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      updateProfile
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+    import { app } from "./firebase-config.js";
+
+
+    const auth = getAuth(app);
+
+    const form =
+      document.getElementById("registerForm");
+
+    const button =
+      document.getElementById("registerBtn");
+
+    const message =
+      document.getElementById("message");
+
+
+    form.addEventListener("submit", async (event) => {
+
+      event.preventDefault();
+
+      const name =
+        document.getElementById("name").value.trim();
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+
+      message.textContent = "";
+      message.style.color = "red";
+
+
+      if (password !== confirmPassword) {
+
+        message.textContent =
+          "❌ Passwords do not match.";
+
+        return;
+      }
+
+
+      if (password.length < 6) {
+
+        message.textContent =
+          "❌ Password must be at least 6 characters.";
+
+        return;
+      }
+
+
+      button.disabled = true;
+      button.textContent = "Creating Account...";
+
+
+      try {
+
+        const userCredential =
+          await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+
+        await updateProfile(
+          userCredential.user,
+          {
+            displayName: name
+          }
+        );
+
+
+        message.style.color = "green";
+
+        message.textContent =
+          "✅ Account created successfully!";
+
+
+        setTimeout(() => {
+
+          window.location.replace(
+            "./dashboard.html"
+          );
+
+        }, 800);
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        message.style.color = "red";
+
+
+        if (
+          error.code ===
+          "auth/email-already-in-use"
+        ) {
+
+          message.textContent =
+            "❌ This email is already registered.";
+
+        } else if (
+          error.code ===
+          "auth/invalid-email"
+        ) {
+
+          message.textContent =
+            "❌ Please enter a valid email.";
+
+        } else if (
+          error.code ===
+          "auth/weak-password"
+        ) {
+
+          message.textContent =
+            "❌ Password is too weak.";
+
+        } else {
+
+          message.textContent =
+            "❌ Registration failed. Please try again.";
+
+        }
+
+
+        button.disabled = false;
+        button.textContent =
+          "Create Account";
+
+      }
+
+    });
+
+  </script>
+
+</body>
+  </html>
