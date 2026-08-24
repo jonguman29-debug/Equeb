@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Login - Equb</title>
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <title>Login | Equb</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -16,27 +22,31 @@
     body {
       min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #111827, #243b55);
+      justify-content: center;
       padding: 20px;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(
+        135deg,
+        #111827,
+        #243b55
+      );
     }
 
-    .login-box {
+    .box {
       width: 100%;
       max-width: 420px;
       background: white;
-      padding: 35px 25px;
+      padding: 32px 25px;
       border-radius: 18px;
       box-shadow: 0 15px 40px rgba(0,0,0,.25);
     }
 
     .logo {
       text-align: center;
-      font-size: 28px;
+      font-size: 30px;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .subtitle {
@@ -47,17 +57,22 @@
 
     label {
       display: block;
-      margin-bottom: 7px;
       font-weight: bold;
+      margin-bottom: 7px;
     }
 
     input {
       width: 100%;
       padding: 13px;
+      margin-bottom: 17px;
       border: 1px solid #d0d5dd;
       border-radius: 9px;
-      margin-bottom: 17px;
       font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #f5b942;
     }
 
     button {
@@ -76,31 +91,32 @@
       opacity: .6;
     }
 
-    .message {
+    #message {
       text-align: center;
       margin-top: 15px;
-      font-size: 14px;
       font-weight: bold;
     }
 
-    .register,
-    .back {
+    .links {
       text-align: center;
       margin-top: 20px;
+      line-height: 2;
     }
 
-    .register a,
-    .back a {
+    .links a {
       color: #111827;
-      font-weight: bold;
       text-decoration: none;
+      font-weight: bold;
     }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <div class="login-box">
+  <div class="box">
 
     <div class="logo">
       💰 Equb
@@ -110,6 +126,7 @@
       Welcome back
     </p>
 
+
     <form id="loginForm">
 
       <label for="email">
@@ -117,49 +134,51 @@
       </label>
 
       <input
-        type="email"
         id="email"
+        type="email"
         placeholder="Enter your email"
-        required
-      >
+        required>
+
 
       <label for="password">
         Password
       </label>
 
       <input
-        type="password"
         id="password"
+        type="password"
         placeholder="Enter your password"
-        required
-      >
+        required>
+
 
       <button
-        type="submit"
-        id="loginBtn">
+        id="loginBtn"
+        type="submit">
+
         Login
+
       </button>
 
-      <div
-        class="message"
-        id="message">
-      </div>
+
+      <div id="message"></div>
 
     </form>
 
 
-    <div class="register">
+    <div class="links">
+
       Don't have an account?
+
       <a href="register.html">
         Create Account
       </a>
-    </div>
 
+      <br>
 
-    <div class="back">
       <a href="index.html">
         ← Back to Home
       </a>
+
     </div>
 
   </div>
@@ -170,11 +189,14 @@
     import {
       getAuth,
       signInWithEmailAndPassword
-    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    }
+    from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
 
     import {
       app
-    } from "./firebase-config.js";
+    }
+    from "./firebase-config.js";
 
 
     const auth = getAuth(app);
@@ -192,7 +214,7 @@
 
     form.addEventListener(
       "submit",
-      async (event) => {
+      async function(event) {
 
         event.preventDefault();
 
@@ -202,6 +224,7 @@
             .getElementById("email")
             .value
             .trim();
+
 
         const password =
           document
@@ -219,10 +242,17 @@
 
         try {
 
-          await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
+          const result =
+            await signInWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
+
+
+          console.log(
+            "Logged in:",
+            result.user.email
           );
 
 
@@ -234,16 +264,18 @@
 
 
           /*
-            Go directly to Dashboard
+            IMPORTANT:
+            Open dashboard directly.
           */
 
-          setTimeout(() => {
+          await new Promise(
+            resolve =>
+              setTimeout(resolve, 500)
+          );
 
-            window.location.replace(
-              "./dashboard.html"
-            );
 
-          }, 500);
+          window.location.href =
+            "dashboard.html";
 
 
         } catch (error) {
@@ -254,7 +286,7 @@
             "red";
 
           message.textContent =
-            "❌ Incorrect email or password.";
+            "❌ Login failed. Check your email and password.";
 
           button.disabled = false;
 
@@ -264,9 +296,11 @@
         }
 
       }
+
     );
 
   </script>
 
 </body>
+
 </html>
