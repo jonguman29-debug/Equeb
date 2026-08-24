@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Contributions | Equb</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .back {
+      color: white;
+      text-decoration: none;
+      background: #374151;
+      padding: 9px 14px;
+      border-radius: 8px;
+    }
+
+    main {
+      max-width: 1050px;
+      margin: auto;
+      padding: 25px 20px 50px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #111827, #243b55);
+      color: white;
+      padding: 28px 22px;
+      border-radius: 18px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: #dbe3ef;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(200px, 1fr)
+      );
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .summary-card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.07);
+    }
+
+    .summary-card p {
+      color: #667085;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .summary-card h2 {
+      font-size: 25px;
+    }
+
+    .form-box,
+    .table-box {
+      background: white;
+      padding: 22px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.07);
+      margin-bottom: 22px;
+    }
+
+    .form-box h2,
+    .table-box h2 {
+      margin-bottom: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d0d5dd;
+      border-radius: 9px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #f5b942;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 9px;
+      background: #f5b942;
+      color: #111827;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 650px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 13px;
+      border-bottom: 1px solid #eef0f4;
+    }
+
+    th {
+      background: #f8fafc;
+    }
+
+    .paid {
+      color: #166534;
+      font-weight: bold;
+    }
+
+    .empty,
+    .loading {
+      text-align: center;
+      padding: 25px;
+      color: #667085;
+    }
+
+    @media (max-width: 650px) {
+      main {
+        padding: 18px 14px 40px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+
+    <div class="logo">
+      💰 Equb
+    </div>
+
+    <a
+      href="dashboard.html"
+      class="back">
+      ← Dashboard
+    </a>
+
+  </header>
+
+
+  <main>
+
+    <section class="hero">
+
+      <h1>💰 Contributions</h1>
+
+      <p>
+        Record and track Equb member contributions.
+      </p>
+
+    </section>
+
+
+    <section class="summary">
+
+      <div class="summary-card">
+
+        <p>Total Contributions</p>
+
+        <h2 id="totalAmount">
+          0 ETB
+        </h2>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <p>Payments Recorded</p>
+
+        <h2 id="paymentCount">
+          0
+        </h2>
+
+      </div>
+
+    </section>
+
+
+    <section class="form-box">
+
+      <h2>➕ Record Contribution</h2>
+
+      <form id="contributionForm">
+
+        <div class="form-grid">
+
+          <div>
+            <label for="member">
+              Member
+            </label>
+
+            <select
+              id="member"
+              required>
+
+              <option value="">
+                Loading members...
+              </option>
+
+            </select>
+          </div>
+
+
+          <div>
+            <label for="amount">
+              Amount (ETB)
+            </label>
+
+            <input
+              type="number"
+              id="amount"
+              min="1"
+              step="0.01"
+              placeholder="Enter amount"
+              required>
+          </div>
+
+
+          <div class="full">
+
+            <label for="note">
+              Note (optional)
+            </label>
+
+            <input
+              type="text"
+              id="note"
+              placeholder="Example: August contribution">
+
+          </div>
+
+
+          <div class="full">
+
+            <button
+              type="submit"
+              id="saveBtn">
+
+              Save Contribution
+
+            </button>
+
+          </div>
+
+        </div>
+
+        <div id="message"></div>
+
+      </form>
+
+    </section>
+
+
+    <section class="table-box">
+
+      <h2>📋 Contribution History</h2>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Member</th>
+              <th>Amount</th>
+              <th>Note</th>
+              <th>Date</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="contributionList">
+
+            <tr>
+              <td
+                colspan="4"
+                class="loading">
+                Loading...
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script type="module">
+
+    import {
+      collection,
+      getDocs,
+      addDoc,
+      doc,
+      updateDoc,
+      increment,
+      serverTimestamp,
+      query,
+      orderBy
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+    import {
+      db
+    } from "./firebase-config.js";
+
+
+    const memberSelect =
+      document.getElementById("member");
+
+    const form =
+      document.getElementById("contributionForm");
+
+    const saveBtn =
+      document.getElementById("saveBtn");
+
+    const message =
+      document.getElementById("message");
+
+    const list =
+      document.getElementById("contributionList");
+
+    const totalAmount =
+      document.getElementById("totalAmount");
+
+    const paymentCount =
+      document.getElementById("paymentCount");
+
+
+    let total = 0;
+    let payments = 0;
+
+
+    async function loadMembers() {
+
+      try {
+
+        const snapshot =
+          await getDocs(
+            collection(db, "users")
+          );
+
+        memberSelect.innerHTML =
+          '<option value="">Select member</option>';
+
+
+        snapshot.forEach((item) => {
+
+          const user =
+            item.data();
+
+          const option =
+            document.createElement("option");
+
+          option.value = item.id;
+
+          option.textContent =
+            user.name ||
+            user.email ||
+            "Member";
+
+          memberSelect.appendChild(option);
+
+        });
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        memberSelect.innerHTML =
+          '<option value="">Could not load members</option>';
+
+      }
+
+    }
+
+
+    async function loadContributions() {
+
+      try {
+
+        const q =
+          query(
+            collection(db, "contributions"),
+            orderBy("createdAt", "desc")
+          );
+
+        const snapshot =
+          await getDocs(q);
+
+
+        list.innerHTML = "";
+
+        total = 0;
+        payments = 0;
+
+
+        if (snapshot.empty) {
+
+          list.innerHTML = `
+            <tr>
+              <td colspan="4" class="empty">
+                No contributions recorded yet.
+              </td>
+            </tr>
+          `;
+
+        }
+
+
+        snapshot.forEach((item) => {
+
+          const data =
+            item.data();
+
+          const amount =
+            Number(data.amount || 0);
+
+          total += amount;
+          payments++;
+
+
+          const row =
+            document.createElement("tr");
+
+
+          let date = "-";
+
+          if (data.createdAt) {
+
+            date =
+              data.createdAt
+                .toDate()
+                .toLocaleDateString();
+
+          }
+
+
+          row.innerHTML = `
+
+            <td>
+              ${data.memberName || "Member"}
+            </td>
+
+            <td class="paid">
+              ${amount.toFixed(2)} ETB
+            </td>
+
+            <td>
+              ${data.note || "-"}
+            </td>
+
+            <td>
+              ${date}
+            </td>
+
+          `;
+
+
+          list.appendChild(row);
+
+        });
+
+
+        totalAmount.textContent =
+          total.toFixed(2) + " ETB";
+
+        paymentCount.textContent =
+          payments;
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        list.innerHTML = `
+          <tr>
+            <td colspan="4" class="empty">
+              No contribution records yet.
+            </td>
+          </tr>
+        `;
+
+      }
+
+    }
+
+
+    form.addEventListener(
+      "submit",
+      async (event) => {
+
+        event.preventDefault();
+
+
+        const memberId =
+          memberSelect.value;
+
+        const amount =
+          Number(
+            document.getElementById("amount").value
+          );
+
+        const note =
+          document.getElementById("note").value.trim();
+
+
+        if (!memberId || amount <= 0) {
+
+          message.style.color = "red";
+
+          message.textContent =
+            "❌ Select a member and enter a valid amount.";
+
+          return;
+        }
+
+
+        const selectedOption =
+          memberSelect.options[
+            memberSelect.selectedIndex
+          ];
+
+
+        const memberName =
+          selectedOption.textContent;
+
+
+        saveBtn.disabled = true;
+
+        saveBtn.textContent =
+          "Saving...";
+
+        message.textContent = "";
+
+
+        try {
+
+          /*
+            SAVE CONTRIBUTION
+          */
+
+          await addDoc(
+            collection(db, "contributions"),
+            {
+              memberId: memberId,
+              memberName: memberName,
+              amount: amount,
+              note: note,
+              createdAt: serverTimestamp()
+            }
+          );
+
+
+          /*
+            UPDATE MEMBER TOTAL
+          */
+
+          await updateDoc(
+            doc(db, "users", memberId),
+            {
+              contribution:
+                increment(amount)
+            }
+          );
+
+
+          message.style.color =
+            "green";
+
+          message.textContent =
+            "✅ Contribution saved successfully!";
+
+
+          form.reset();
+
+
+          await loadContributions();
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          message.style.color =
+            "red";
+
+          message.textContent =
+            "❌ Could not save contribution.";
+
+        }
+
+
+        saveBtn.disabled = false;
+
+        saveBtn.textContent =
+          "Save Contribution";
+
+      }
+    );
+
+
+    loadMembers();
+
+    loadContributions();
+
+  </script>
+
+</body>
+  </html>
