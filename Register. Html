@@ -77,6 +77,18 @@
       cursor: pointer;
     }
 
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
     .login {
       text-align: center;
       margin-top: 20px;
@@ -109,9 +121,10 @@
       Create your Equb account
     </p>
 
-    <form>
+    <form id="registerForm">
 
       <label for="name">Full Name</label>
+
       <input
         type="text"
         id="name"
@@ -120,6 +133,7 @@
       >
 
       <label for="phone">Phone Number</label>
+
       <input
         type="tel"
         id="phone"
@@ -127,25 +141,40 @@
         required
       >
 
+      <label for="email">Email</label>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        required
+      >
+
       <label for="password">Password</label>
+
       <input
         type="password"
         id="password"
         placeholder="Create a password"
+        minlength="6"
         required
       >
 
       <label for="confirm">Confirm Password</label>
+
       <input
         type="password"
         id="confirm"
         placeholder="Confirm your password"
+        minlength="6"
         required
       >
 
-      <button type="submit">
+      <button type="submit" id="registerBtn">
         Create Account
       </button>
+
+      <div class="message" id="message"></div>
 
     </form>
 
@@ -159,6 +188,147 @@
     </a>
 
   </div>
+
+
+  <script type="module">
+
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      updateProfile
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+    import { app } from "./firebase-config.js";
+
+
+    const auth = getAuth(app);
+
+    const form = document.getElementById("registerForm");
+
+    const button = document.getElementById("registerBtn");
+
+    const message = document.getElementById("message");
+
+
+    form.addEventListener("submit", async (event) => {
+
+      event.preventDefault();
+
+
+      const name =
+        document.getElementById("name").value.trim();
+
+      const phone =
+        document.getElementById("phone").value.trim();
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      const confirm =
+        document.getElementById("confirm").value;
+
+
+      message.textContent = "";
+
+
+      if (password !== confirm) {
+
+        message.textContent =
+          "❌ Passwords do not match.";
+
+        return;
+      }
+
+
+      if (password.length < 6) {
+
+        message.textContent =
+          "❌ Password must be at least 6 characters.";
+
+        return;
+      }
+
+
+      try {
+
+        button.disabled = true;
+
+        button.textContent = "Creating account...";
+
+
+        const userCredential =
+          await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+
+        const user =
+          userCredential.user;
+
+
+        await updateProfile(user, {
+          displayName: name
+        });
+
+
+        console.log("Phone:", phone);
+
+
+        message.textContent =
+          "✅ Account created successfully!";
+
+
+        setTimeout(() => {
+
+          window.location.href =
+            "dashboard.html";
+
+        }, 1200);
+
+
+      } catch (error) {
+
+        console.error(error);
+
+
+        if (error.code === "auth/email-already-in-use") {
+
+          message.textContent =
+            "❌ This email is already registered.";
+
+        } else if (error.code === "auth/invalid-email") {
+
+          message.textContent =
+            "❌ Please enter a valid email.";
+
+        } else if (error.code === "auth/weak-password") {
+
+          message.textContent =
+            "❌ Password is too weak.";
+
+        } else {
+
+          message.textContent =
+            "❌ Registration failed. Please try again.";
+
+        }
+
+
+        button.disabled = false;
+
+        button.textContent =
+          "Create Account";
+
+      }
+
+    });
+
+  </script>
 
 </body>
 </html>
