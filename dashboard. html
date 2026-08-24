@@ -228,7 +228,6 @@
     Loading Dashboard...
   </div>
 
-
   <header>
 
     <div class="logo">
@@ -242,7 +241,6 @@
     </button>
 
   </header>
-
 
   <main>
 
@@ -264,88 +262,65 @@
 
     </section>
 
-
     <h2 class="section-title">
       Equb Overview
     </h2>
 
-
     <section class="cards">
 
       <div class="card">
-
         <div class="card-icon">👥</div>
-
         <div class="card-title">
           Total Members
         </div>
-
         <div
           class="card-value"
           id="memberCount">
           0
         </div>
-
       </div>
 
-
       <div class="card">
-
         <div class="card-icon">💰</div>
-
         <div class="card-title">
           My Contribution
         </div>
-
         <div
           class="card-value"
           id="myContribution">
           0 ETB
         </div>
-
       </div>
 
-
       <div class="card">
-
         <div class="card-icon">🎯</div>
-
         <div class="card-title">
           Current Turn
         </div>
-
         <div
           class="card-value"
           id="currentTurn">
           -
         </div>
-
       </div>
 
-
       <div class="card">
-
         <div class="card-icon">📅</div>
-
         <div class="card-title">
           Next Payment
         </div>
-
         <div
           class="card-value"
           id="nextPayment">
           -
         </div>
-
       </div>
 
     </section>
 
-
     <h2 class="section-title">
       Equb Information
     </h2>
-
 
     <section class="info-grid">
 
@@ -354,7 +329,6 @@
         <h3>📊 Equb Details</h3>
 
         <div class="info-row">
-
           <span class="info-label">
             Equb Name
           </span>
@@ -362,12 +336,9 @@
           <span class="info-value">
             Equb
           </span>
-
         </div>
 
-
         <div class="info-row">
-
           <span class="info-label">
             Contribution
           </span>
@@ -377,12 +348,9 @@
             id="infoContribution">
             0 ETB
           </span>
-
         </div>
 
-
         <div class="info-row">
-
           <span class="info-label">
             Frequency
           </span>
@@ -390,12 +358,9 @@
           <span class="info-value">
             Monthly
           </span>
-
         </div>
 
-
         <div class="info-row">
-
           <span class="info-label">
             Status
           </span>
@@ -403,18 +368,15 @@
           <span class="status">
             Active
           </span>
-
         </div>
 
       </div>
-
 
       <div class="info-box">
 
         <h3>🎯 Turn Information</h3>
 
         <div class="info-row">
-
           <span class="info-label">
             Current Turn
           </span>
@@ -424,12 +386,9 @@
             id="turnInfo">
             -
           </span>
-
         </div>
 
-
         <div class="info-row">
-
           <span class="info-label">
             Next Winner
           </span>
@@ -437,12 +396,9 @@
           <span class="info-value">
             Not selected
           </span>
-
         </div>
 
-
         <div class="info-row">
-
           <span class="info-label">
             Next Date
           </span>
@@ -452,18 +408,15 @@
             id="turnDate">
             -
           </span>
-
         </div>
 
       </div>
 
     </section>
 
-
     <h2 class="section-title">
       Quick Actions
     </h2>
-
 
     <section class="actions">
 
@@ -473,20 +426,17 @@
         👥 Members
       </a>
 
-
       <a
         href="contributions.html"
         class="action-btn">
         💰 Contributions
       </a>
 
-
       <a
-        href="#"
+        href="turns.html"
         class="action-btn">
         🎯 Turns
       </a>
-
 
       <a
         href="#"
@@ -497,7 +447,6 @@
     </section>
 
   </main>
-
 
   <footer>
     © 2026 Equb. All rights reserved.
@@ -526,7 +475,6 @@
 
 
     const auth = getAuth(app);
-
 
     const loading =
       document.getElementById("loading");
@@ -589,69 +537,13 @@
                 data.contribution || 0
               );
 
-
             myContribution.textContent =
               contribution.toFixed(2) + " ETB";
 
             infoContribution.textContent =
               contribution.toFixed(2) + " ETB";
-
           }
 
 
           const snapshot =
-            await getDocs(
-              collection(db, "users")
-            );
-
-
-          memberCount.textContent =
-            snapshot.size;
-
-
-        } catch (error) {
-
-          console.error(
-            "Firestore error:",
-            error
-          );
-
-        }
-
-
-        loading.style.display =
-          "none";
-
-      }
-    );
-
-
-    logoutBtn.addEventListener(
-      "click",
-      async () => {
-
-        try {
-
-          await signOut(auth);
-
-          window.location.replace(
-            "./login.html"
-          );
-
-        } catch (error) {
-
-          console.error(error);
-
-          alert(
-            "Logout failed. Please try again."
-          );
-
-        }
-
-      }
-    );
-
-  </script>
-
-</body>
-</html>
+           
