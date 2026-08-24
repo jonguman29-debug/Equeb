@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard - Digital Equb</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .logout {
+      background: #ef4444;
+      color: white;
+      padding: 9px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 25px 20px;
+    }
+
+    .welcome {
+      margin-bottom: 25px;
+    }
+
+    .welcome h1 {
+      font-size: 28px;
+      margin-bottom: 7px;
+    }
+
+    .welcome p {
+      color: #667085;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 15px;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+    }
+
+    .icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      color: #667085;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .value {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .section {
+      background: white;
+      padding: 24px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+    }
+
+    .section h2 {
+      font-size: 20px;
+      margin-bottom: 18px;
+    }
+
+    .profile-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 13px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .profile-row:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      color: #667085;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: #dcfce7;
+      color: #166534;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .turn {
+      text-align: center;
+      padding: 25px;
+      background: #fff8e1;
+      border-radius: 12px;
+    }
+
+    .turn-number {
+      font-size: 42px;
+      font-weight: bold;
+      color: #b7791f;
+      margin: 10px 0;
+    }
+
+    .payment {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .payment:last-child {
+      border-bottom: none;
+    }
+
+    .paid {
+      color: #16a34a;
+      font-weight: bold;
+    }
+
+    .pending {
+      color: #dc2626;
+      font-weight: bold;
+    }
+
+    @media (max-width: 500px) {
+      .welcome h1 {
+        font-size: 24px;
+      }
+
+      .profile-row,
+      .payment {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">💰 Digital Equb</div>
+
+    <a href="login.html" class="logout">
+      Logout
+    </a>
+  </header>
+
+  <main class="container">
+
+    <div class="welcome">
+      <h1>Welcome, Yohannes 👋</h1>
+      <p>Here is your Equb account overview.</p>
+    </div>
+
+    <!-- Summary Cards -->
+
+    <div class="cards">
+
+      <div class="card">
+        <div class="icon">💰</div>
+        <h3>Monthly Contribution</h3>
+        <div class="value">1,000 ETB</div>
+      </div>
+
+      <div class="card">
+        <div class="icon">📅</div>
+        <h3>Next Payment</h3>
+        <div class="value">Sep 1</div>
+      </div>
+
+      <div class="card">
+        <div class="icon">🎯</div>
+        <h3>My Turn</h3>
+        <div class="value">#18</div>
+      </div>
+
+      <div class="card">
+        <div class="icon">✅</div>
+        <h3>Account Status</h3>
+        <div class="value">
+          <span class="status">Active</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Profile -->
+
+    <div class="section">
+
+      <h2>👤 My Profile</h2>
+
+      <div class="profile-row">
+        <span class="label">Full Name</span>
+        <strong>Yohannes</strong>
+      </div>
+
+      <div class="profile-row">
+        <span class="label">Member ID</span>
+        <strong>EQB-0018</strong>
+      </div>
+
+      <div class="profile-row">
+        <span class="label">Phone</span>
+        <strong>09XXXXXXXX</strong>
+      </div>
+
+      <div class="profile-row">
+        <span class="label">Status</span>
+        <span class="status">Active</span>
+      </div>
+
+    </div>
+
+    <!-- My Turn -->
+
+    <div class="section">
+
+      <h2>🎯 My Equb Turn</h2>
+
+      <div class="turn">
+
+        <p>Your current position</p>
+
+        <div class="turn-number">
+          #18
+        </div>
+
+        <p>
+          Your expected Equb payout:
+          <strong>20,000 ETB</strong>
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- Payment History -->
+
+    <div class="section">
+
+      <h2>💳 Recent Payments</h2>
+
+      <div class="payment">
+        <span>August 2026</span>
+        <strong class="paid">Paid — 1,000 ETB</strong>
+      </div>
+
+      <div class="payment">
+        <span>July 2026</span>
+        <strong class="paid">Paid — 1,000 ETB</strong>
+      </div>
+
+      <div class="payment">
+        <span>June 2026</span>
+        <strong class="paid">Paid — 1,000 ETB</strong>
+      </div>
+
+      <div class="payment">
+        <span>September 2026</span>
+        <strong class="pending">Pending</strong>
+      </div>
+
+    </div>
+
+  </main>
+
+</body>
+  </html>
