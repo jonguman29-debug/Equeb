@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Register - Digital Equb</title>
+  <title>Create Account | Equb</title>
 
   <style>
     * {
@@ -18,25 +17,24 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 20px;
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #111827, #243b55);
-      padding: 20px;
     }
 
-    .register-box {
+    .box {
       width: 100%;
-      max-width: 420px;
+      max-width: 430px;
       background: white;
       padding: 35px 25px;
       border-radius: 18px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      box-shadow: 0 15px 40px rgba(0,0,0,.25);
     }
 
-    .logo {
+    h1 {
       text-align: center;
-      font-size: 28px;
-      font-weight: bold;
-      margin-bottom: 10px;
+      color: #111827;
+      margin-bottom: 8px;
     }
 
     .subtitle {
@@ -54,9 +52,9 @@
     input {
       width: 100%;
       padding: 13px;
+      margin-bottom: 16px;
       border: 1px solid #d0d5dd;
       border-radius: 9px;
-      margin-bottom: 16px;
       font-size: 16px;
       outline: none;
     }
@@ -78,34 +76,26 @@
     }
 
     button:disabled {
-      opacity: 0.6;
+      opacity: .6;
       cursor: not-allowed;
     }
 
-    .message {
+    #message {
       text-align: center;
       margin-top: 15px;
-      font-size: 14px;
       font-weight: bold;
+      line-height: 1.5;
     }
 
-    .login {
+    .link {
       text-align: center;
       margin-top: 20px;
       color: #667085;
     }
 
-    .login a {
+    .link a {
       color: #111827;
       font-weight: bold;
-      text-decoration: none;
-    }
-
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      color: #667085;
       text-decoration: none;
     }
   </style>
@@ -113,12 +103,12 @@
 
 <body>
 
-  <div class="register-box">
+  <div class="box">
 
-    <div class="logo">💰 Digital Equb</div>
+    <h1>💰 Equb</h1>
 
     <p class="subtitle">
-      Create your Equb account
+      Create your Digital Equb account
     </p>
 
     <form id="registerForm">
@@ -129,15 +119,6 @@
         type="text"
         id="name"
         placeholder="Enter your full name"
-        required
-      >
-
-      <label for="phone">Phone Number</label>
-
-      <input
-        type="tel"
-        id="phone"
-        placeholder="Enter your phone number"
         required
       >
 
@@ -155,37 +136,41 @@
       <input
         type="password"
         id="password"
-        placeholder="Create a password"
+        placeholder="At least 6 characters"
         minlength="6"
         required
       >
 
-      <label for="confirm">Confirm Password</label>
+      <label for="confirmPassword">
+        Confirm Password
+      </label>
 
       <input
         type="password"
-        id="confirm"
-        placeholder="Confirm your password"
+        id="confirmPassword"
+        placeholder="Enter password again"
         minlength="6"
         required
       >
 
-      <button type="submit" id="registerBtn">
+      <button
+        type="submit"
+        id="registerBtn">
         Create Account
       </button>
 
-      <div class="message" id="message"></div>
+      <div id="message"></div>
 
     </form>
 
-    <div class="login">
+    <div class="link">
       Already have an account?
       <a href="login.html">Login</a>
     </div>
 
-    <a href="index.html" class="back">
-      ← Back to Home
-    </a>
+    <div class="link">
+      <a href="index.html">← Back to Home</a>
+    </div>
 
   </div>
 
@@ -198,28 +183,36 @@
       updateProfile
     } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-    import { app } from "./firebase-config.js";
+    import {
+      doc,
+      setDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+    import {
+      app,
+      db
+    } from "./firebase-config.js";
 
 
     const auth = getAuth(app);
 
-    const form = document.getElementById("registerForm");
+    const form =
+      document.getElementById("registerForm");
 
-    const button = document.getElementById("registerBtn");
+    const button =
+      document.getElementById("registerBtn");
 
-    const message = document.getElementById("message");
+    const message =
+      document.getElementById("message");
 
 
     form.addEventListener("submit", async (event) => {
 
       event.preventDefault();
 
-
       const name =
         document.getElementById("name").value.trim();
-
-      const phone =
-        document.getElementById("phone").value.trim();
 
       const email =
         document.getElementById("email").value.trim();
@@ -227,14 +220,15 @@
       const password =
         document.getElementById("password").value;
 
-      const confirm =
-        document.getElementById("confirm").value;
+      const confirmPassword =
+        document.getElementById("confirmPassword").value;
 
 
       message.textContent = "";
+      message.style.color = "red";
 
 
-      if (password !== confirm) {
+      if (password !== confirmPassword) {
 
         message.textContent =
           "❌ Passwords do not match.";
@@ -252,12 +246,13 @@
       }
 
 
+      button.disabled = true;
+      button.textContent = "Creating Account...";
+
+
       try {
 
-        button.disabled = true;
-
-        button.textContent = "Creating account...";
-
+        /* CREATE FIREBASE ACCOUNT */
 
         const userCredential =
           await createUserWithEmailAndPassword(
@@ -271,45 +266,86 @@
           userCredential.user;
 
 
-        await updateProfile(user, {
-          displayName: name
-        });
+        /* SAVE DISPLAY NAME */
+
+        await updateProfile(
+          user,
+          {
+            displayName: name
+          }
+        );
 
 
-        console.log("Phone:", phone);
+        /* SAVE USER TO FIRESTORE */
 
+        await setDoc(
+          doc(db, "users", user.uid),
+          {
+            name: name,
+            email: email,
+            role: "member",
+            contribution: 0,
+            status: "active",
+            createdAt: serverTimestamp()
+          }
+        );
+
+
+        message.style.color = "green";
 
         message.textContent =
           "✅ Account created successfully!";
 
 
+        /* GO TO DASHBOARD */
+
         setTimeout(() => {
 
-          window.location.href =
-            "dashboard.html";
+          window.location.replace(
+            "./dashboard.html"
+          );
 
-        }, 1200);
+        }, 800);
 
 
       } catch (error) {
 
         console.error(error);
 
+        message.style.color = "red";
 
-        if (error.code === "auth/email-already-in-use") {
+
+        if (
+          error.code ===
+          "auth/email-already-in-use"
+        ) {
 
           message.textContent =
             "❌ This email is already registered.";
 
-        } else if (error.code === "auth/invalid-email") {
+        } else if (
+          error.code ===
+          "auth/invalid-email"
+        ) {
 
           message.textContent =
             "❌ Please enter a valid email.";
 
-        } else if (error.code === "auth/weak-password") {
+        } else if (
+          error.code ===
+          "auth/weak-password"
+        ) {
 
           message.textContent =
             "❌ Password is too weak.";
+
+        } else if (
+          error.code ===
+          "permission-denied"
+        ) {
+
+          message.textContent =
+            "❌ Firestore permission denied.";
 
         } else {
 
