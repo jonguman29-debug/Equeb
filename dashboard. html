@@ -19,7 +19,6 @@
       color: #172033;
     }
 
-    /* HEADER */
     header {
       background: #111827;
       color: white;
@@ -47,14 +46,12 @@
       cursor: pointer;
     }
 
-    /* MAIN */
     main {
       max-width: 1100px;
       margin: auto;
       padding: 25px 20px 50px;
     }
 
-    /* WELCOME */
     .welcome {
       background: linear-gradient(135deg, #111827, #243b55);
       color: white;
@@ -70,7 +67,6 @@
 
     .welcome p {
       color: #dbe3ef;
-      line-height: 1.5;
     }
 
     #userEmail {
@@ -79,7 +75,6 @@
       color: #cbd5e1;
     }
 
-    /* SUMMARY */
     .section-title {
       font-size: 22px;
       margin: 25px 0 15px;
@@ -98,7 +93,7 @@
       background: white;
       border-radius: 15px;
       padding: 22px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+      box-shadow: 0 5px 20px rgba(0,0,0,.07);
     }
 
     .card-icon {
@@ -118,7 +113,6 @@
       color: #111827;
     }
 
-    /* EQUb INFO */
     .info-grid {
       display: grid;
       grid-template-columns: repeat(
@@ -132,12 +126,11 @@
       background: white;
       padding: 22px;
       border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+      box-shadow: 0 5px 20px rgba(0,0,0,.07);
     }
 
     .info-box h3 {
       margin-bottom: 15px;
-      font-size: 18px;
     }
 
     .info-row {
@@ -161,7 +154,6 @@
       text-align: right;
     }
 
-    /* STATUS */
     .status {
       display: inline-block;
       padding: 6px 10px;
@@ -172,7 +164,6 @@
       font-weight: bold;
     }
 
-    /* QUICK ACTIONS */
     .actions {
       display: grid;
       grid-template-columns: repeat(
@@ -191,23 +182,20 @@
       text-decoration: none;
       border-radius: 12px;
       font-weight: bold;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+      box-shadow: 0 5px 20px rgba(0,0,0,.07);
     }
 
     .action-btn:hover {
       background: #f5b942;
     }
 
-    /* FOOTER */
     footer {
       text-align: center;
       padding: 25px;
       background: #111827;
       color: #9ca3af;
-      margin-top: 30px;
     }
 
-    /* LOADING */
     #loading {
       position: fixed;
       inset: 0;
@@ -220,29 +208,7 @@
       z-index: 100;
     }
 
-    /* MOBILE */
     @media (max-width: 600px) {
-
-      header {
-        padding: 14px;
-      }
-
-      .logo {
-        font-size: 19px;
-      }
-
-      .logout-btn {
-        padding: 9px 12px;
-      }
-
-      main {
-        padding: 18px 14px 40px;
-      }
-
-      .welcome {
-        padding: 25px 20px;
-      }
-
       .welcome h1 {
         font-size: 25px;
       }
@@ -256,13 +222,10 @@
 
 <body>
 
-  <!-- LOADING SCREEN -->
   <div id="loading">
     Loading Dashboard...
   </div>
 
-
-  <!-- HEADER -->
   <header>
 
     <div class="logo">
@@ -278,10 +241,8 @@
   </header>
 
 
-  <!-- MAIN -->
   <main>
 
-    <!-- WELCOME -->
     <section class="welcome">
 
       <h1>
@@ -299,7 +260,6 @@
     </section>
 
 
-    <!-- SUMMARY -->
     <h2 class="section-title">
       Equb Overview
     </h2>
@@ -307,44 +267,37 @@
     <section class="cards">
 
       <div class="card">
-
-        <div class="card-icon">
-          👥
-        </div>
+        <div class="card-icon">👥</div>
 
         <div class="card-title">
           Total Members
         </div>
 
-        <div class="card-value">
+        <div
+          class="card-value"
+          id="memberCount">
           0
         </div>
-
       </div>
 
 
       <div class="card">
-
-        <div class="card-icon">
-          💰
-        </div>
+        <div class="card-icon">💰</div>
 
         <div class="card-title">
           My Contribution
         </div>
 
-        <div class="card-value">
+        <div
+          class="card-value"
+          id="myContribution">
           0 ETB
         </div>
-
       </div>
 
 
       <div class="card">
-
-        <div class="card-icon">
-          🎯
-        </div>
+        <div class="card-icon">🎯</div>
 
         <div class="card-title">
           Current Turn
@@ -353,15 +306,11 @@
         <div class="card-value">
           -
         </div>
-
       </div>
 
 
       <div class="card">
-
-        <div class="card-icon">
-          📅
-        </div>
+        <div class="card-icon">📅</div>
 
         <div class="card-title">
           Next Payment
@@ -370,13 +319,11 @@
         <div class="card-value">
           -
         </div>
-
       </div>
 
     </section>
 
 
-    <!-- EQUb INFORMATION -->
     <h2 class="section-title">
       Equb Information
     </h2>
@@ -385,38 +332,31 @@
 
       <div class="info-box">
 
-        <h3>
-          📊 Equb Details
-        </h3>
+        <h3>📊 Equb Details</h3>
 
         <div class="info-row">
-
           <span class="info-label">
             Equb Name
           </span>
 
           <span class="info-value">
-            My Equb
+            Equb
           </span>
-
         </div>
 
-
         <div class="info-row">
-
           <span class="info-label">
             Contribution
           </span>
 
-          <span class="info-value">
+          <span
+            class="info-value"
+            id="infoContribution">
             0 ETB
           </span>
-
         </div>
 
-
         <div class="info-row">
-
           <span class="info-label">
             Frequency
           </span>
@@ -424,12 +364,9 @@
           <span class="info-value">
             Monthly
           </span>
-
         </div>
 
-
         <div class="info-row">
-
           <span class="info-label">
             Status
           </span>
@@ -437,7 +374,6 @@
           <span class="status">
             Active
           </span>
-
         </div>
 
       </div>
@@ -445,12 +381,9 @@
 
       <div class="info-box">
 
-        <h3>
-          🎯 Turn Information
-        </h3>
+        <h3>🎯 Turn Information</h3>
 
         <div class="info-row">
-
           <span class="info-label">
             Current Turn
           </span>
@@ -458,12 +391,9 @@
           <span class="info-value">
             -
           </span>
-
         </div>
 
-
         <div class="info-row">
-
           <span class="info-label">
             Next Winner
           </span>
@@ -471,12 +401,9 @@
           <span class="info-value">
             Not selected
           </span>
-
         </div>
 
-
         <div class="info-row">
-
           <span class="info-label">
             Next Date
           </span>
@@ -484,7 +411,6 @@
           <span class="info-value">
             -
           </span>
-
         </div>
 
       </div>
@@ -492,31 +418,37 @@
     </section>
 
 
-    <!-- QUICK ACTIONS -->
     <h2 class="section-title">
       Quick Actions
     </h2>
 
     <section class="actions">
 
+      <!-- MEMBERS -->
       <a
-        href="#"
+        href="members.html"
         class="action-btn">
         👥 Members
       </a>
 
+
+      <!-- CONTRIBUTIONS -->
       <a
         href="#"
         class="action-btn">
         💰 Contributions
       </a>
 
+
+      <!-- TURNS -->
       <a
         href="#"
         class="action-btn">
         🎯 Turns
       </a>
 
+
+      <!-- REPORTS -->
       <a
         href="#"
         class="action-btn">
@@ -528,15 +460,11 @@
   </main>
 
 
-  <!-- FOOTER -->
   <footer>
-
     © 2026 Equb. All rights reserved.
-
   </footer>
 
 
-  <!-- FIREBASE -->
   <script type="module">
 
     import {
@@ -545,10 +473,21 @@
       signOut
     } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-    import { app } from "./firebase-config.js";
+    import {
+      collection,
+      getDocs,
+      doc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+    import {
+      app,
+      db
+    } from "./firebase-config.js";
 
 
     const auth = getAuth(app);
+
 
     const loading =
       document.getElementById("loading");
@@ -562,41 +501,103 @@
     const logoutBtn =
       document.getElementById("logoutBtn");
 
+    const memberCount =
+      document.getElementById("memberCount");
+
+    const myContribution =
+      document.getElementById("myContribution");
+
+    const infoContribution =
+      document.getElementById("infoContribution");
+
 
     /*
       CHECK LOGIN
     */
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(
+      auth,
+      async (user) => {
 
-      if (user) {
+        if (!user) {
 
-        /*
-          USER IS LOGGED IN
-        */
+          window.location.replace(
+            "./login.html"
+          );
 
-        const name =
+          return;
+        }
+
+
+        userName.textContent =
           user.displayName || "Member";
-
-        userName.textContent = name;
 
         userEmail.textContent =
           user.email || "";
 
-        loading.style.display = "none";
-
-      } else {
 
         /*
-          USER IS NOT LOGGED IN
+          GET USER DATA
         */
 
-        window.location.href =
-          "login.html";
+        try {
+
+          const userDoc =
+            await getDoc(
+              doc(db, "users", user.uid)
+            );
+
+
+          if (userDoc.exists()) {
+
+            const data =
+              userDoc.data();
+
+
+            const contribution =
+              Number(
+                data.contribution || 0
+              );
+
+
+            myContribution.textContent =
+              contribution + " ETB";
+
+            infoContribution.textContent =
+              contribution + " ETB";
+
+          }
+
+
+          /*
+            GET TOTAL MEMBERS
+          */
+
+          const snapshot =
+            await getDocs(
+              collection(db, "users")
+            );
+
+
+          memberCount.textContent =
+            snapshot.size;
+
+
+        } catch (error) {
+
+          console.error(
+            "Firestore error:",
+            error
+          );
+
+        }
+
+
+        loading.style.display =
+          "none";
 
       }
-
-    });
+    );
 
 
     /*
@@ -611,18 +612,16 @@
 
           await signOut(auth);
 
-          window.location.href =
-            "login.html";
+          window.location.replace(
+            "./login.html"
+          );
 
         } catch (error) {
 
-          console.error(
-            "Logout error:",
-            error
-          );
+          console.error(error);
 
           alert(
-            "Could not log out. Please try again."
+            "Logout failed. Please try again."
           );
 
         }
