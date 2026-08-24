@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | Equb</title>
+
+  <title>Login - Equb</title>
 
   <style>
     * {
@@ -17,12 +18,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #111827, #243b55);
+      padding: 20px;
     }
 
-    .box {
+    .login-box {
       width: 100%;
       max-width: 420px;
       background: white;
@@ -31,10 +32,11 @@
       box-shadow: 0 15px 40px rgba(0,0,0,.25);
     }
 
-    h1 {
+    .logo {
       text-align: center;
-      margin-bottom: 8px;
-      color: #111827;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
 
     .subtitle {
@@ -52,9 +54,9 @@
     input {
       width: 100%;
       padding: 13px;
-      margin-bottom: 17px;
       border: 1px solid #d0d5dd;
       border-radius: 9px;
+      margin-bottom: 17px;
       font-size: 16px;
     }
 
@@ -74,18 +76,21 @@
       opacity: .6;
     }
 
-    #message {
+    .message {
       text-align: center;
       margin-top: 15px;
+      font-size: 14px;
       font-weight: bold;
     }
 
-    .links {
+    .register,
+    .back {
       text-align: center;
       margin-top: 20px;
     }
 
-    .links a {
+    .register a,
+    .back a {
       color: #111827;
       font-weight: bold;
       text-decoration: none;
@@ -95,17 +100,21 @@
 
 <body>
 
-  <div class="box">
+  <div class="login-box">
 
-    <h1>💰 Equb</h1>
+    <div class="logo">
+      💰 Equb
+    </div>
 
     <p class="subtitle">
-      Login to your account
+      Welcome back
     </p>
 
     <form id="loginForm">
 
-      <label for="email">Email</label>
+      <label for="email">
+        Email
+      </label>
 
       <input
         type="email"
@@ -114,7 +123,9 @@
         required
       >
 
-      <label for="password">Password</label>
+      <label for="password">
+        Password
+      </label>
 
       <input
         type="password"
@@ -123,21 +134,32 @@
         required
       >
 
-      <button id="loginBtn" type="submit">
+      <button
+        type="submit"
+        id="loginBtn">
         Login
       </button>
 
-      <div id="message"></div>
+      <div
+        class="message"
+        id="message">
+      </div>
 
     </form>
 
-    <div class="links">
+
+    <div class="register">
       Don't have an account?
-      <a href="register.html">Create Account</a>
+      <a href="register.html">
+        Create Account
+      </a>
     </div>
 
-    <div class="links">
-      <a href="index.html">← Back to Home</a>
+
+    <div class="back">
+      <a href="index.html">
+        ← Back to Home
+      </a>
     </div>
 
   </div>
@@ -150,9 +172,13 @@
       signInWithEmailAndPassword
     } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-    import { app } from "./firebase-config.js";
+    import {
+      app
+    } from "./firebase-config.js";
+
 
     const auth = getAuth(app);
+
 
     const form =
       document.getElementById("loginForm");
@@ -164,60 +190,81 @@
       document.getElementById("message");
 
 
-    form.addEventListener("submit", async (e) => {
+    form.addEventListener(
+      "submit",
+      async (event) => {
 
-      e.preventDefault();
+        event.preventDefault();
 
-      const email =
-        document.getElementById("email").value.trim();
 
-      const password =
-        document.getElementById("password").value;
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
 
-      button.disabled = true;
-      button.textContent = "Logging in...";
-      message.textContent = "";
+        const password =
+          document
+            .getElementById("password")
+            .value;
 
-      try {
 
-        await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
+        button.disabled = true;
 
-        message.style.color = "green";
-        message.textContent =
-          "✅ Login successful!";
+        button.textContent =
+          "Logging in...";
 
-        /*
-          IMPORTANT:
-          Go directly to dashboard.html
-        */
+        message.textContent = "";
 
-        setTimeout(() => {
 
-          window.location.replace(
-            "./dashboard.html"
+        try {
+
+          await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
           );
 
-        }, 500);
 
-      } catch (error) {
+          message.style.color =
+            "green";
 
-        console.error(error);
+          message.textContent =
+            "✅ Login successful!";
 
-        message.style.color = "red";
 
-        message.textContent =
-          "❌ Incorrect email or password.";
+          /*
+            Go directly to Dashboard
+          */
 
-        button.disabled = false;
-        button.textContent = "Login";
+          setTimeout(() => {
+
+            window.location.replace(
+              "./dashboard.html"
+            );
+
+          }, 500);
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          message.style.color =
+            "red";
+
+          message.textContent =
+            "❌ Incorrect email or password.";
+
+          button.disabled = false;
+
+          button.textContent =
+            "Login";
+
+        }
 
       }
-
-    });
+    );
 
   </script>
 
