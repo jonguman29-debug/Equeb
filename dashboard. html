@@ -183,10 +183,12 @@
       border-radius: 12px;
       font-weight: bold;
       box-shadow: 0 5px 20px rgba(0,0,0,.07);
+      transition: .2s;
     }
 
     .action-btn:hover {
       background: #f5b942;
+      transform: translateY(-2px);
     }
 
     footer {
@@ -226,6 +228,7 @@
     Loading Dashboard...
   </div>
 
+
   <header>
 
     <div class="logo">
@@ -246,7 +249,9 @@
     <section class="welcome">
 
       <h1>
-        Welcome, <span id="userName">Member</span> 👋
+        Welcome,
+        <span id="userName">Member</span>
+        👋
       </h1>
 
       <p>
@@ -264,9 +269,11 @@
       Equb Overview
     </h2>
 
+
     <section class="cards">
 
       <div class="card">
+
         <div class="card-icon">👥</div>
 
         <div class="card-title">
@@ -278,10 +285,12 @@
           id="memberCount">
           0
         </div>
+
       </div>
 
 
       <div class="card">
+
         <div class="card-icon">💰</div>
 
         <div class="card-title">
@@ -293,32 +302,41 @@
           id="myContribution">
           0 ETB
         </div>
+
       </div>
 
 
       <div class="card">
+
         <div class="card-icon">🎯</div>
 
         <div class="card-title">
           Current Turn
         </div>
 
-        <div class="card-value">
+        <div
+          class="card-value"
+          id="currentTurn">
           -
         </div>
+
       </div>
 
 
       <div class="card">
+
         <div class="card-icon">📅</div>
 
         <div class="card-title">
           Next Payment
         </div>
 
-        <div class="card-value">
+        <div
+          class="card-value"
+          id="nextPayment">
           -
         </div>
+
       </div>
 
     </section>
@@ -328,6 +346,7 @@
       Equb Information
     </h2>
 
+
     <section class="info-grid">
 
       <div class="info-box">
@@ -335,6 +354,7 @@
         <h3>📊 Equb Details</h3>
 
         <div class="info-row">
+
           <span class="info-label">
             Equb Name
           </span>
@@ -342,9 +362,12 @@
           <span class="info-value">
             Equb
           </span>
+
         </div>
 
+
         <div class="info-row">
+
           <span class="info-label">
             Contribution
           </span>
@@ -354,9 +377,12 @@
             id="infoContribution">
             0 ETB
           </span>
+
         </div>
 
+
         <div class="info-row">
+
           <span class="info-label">
             Frequency
           </span>
@@ -364,9 +390,12 @@
           <span class="info-value">
             Monthly
           </span>
+
         </div>
 
+
         <div class="info-row">
+
           <span class="info-label">
             Status
           </span>
@@ -374,6 +403,7 @@
           <span class="status">
             Active
           </span>
+
         </div>
 
       </div>
@@ -384,16 +414,22 @@
         <h3>🎯 Turn Information</h3>
 
         <div class="info-row">
+
           <span class="info-label">
             Current Turn
           </span>
 
-          <span class="info-value">
+          <span
+            class="info-value"
+            id="turnInfo">
             -
           </span>
+
         </div>
 
+
         <div class="info-row">
+
           <span class="info-label">
             Next Winner
           </span>
@@ -401,16 +437,22 @@
           <span class="info-value">
             Not selected
           </span>
+
         </div>
 
+
         <div class="info-row">
+
           <span class="info-label">
             Next Date
           </span>
 
-          <span class="info-value">
+          <span
+            class="info-value"
+            id="turnDate">
             -
           </span>
+
         </div>
 
       </div>
@@ -422,9 +464,9 @@
       Quick Actions
     </h2>
 
+
     <section class="actions">
 
-      <!-- MEMBERS -->
       <a
         href="members.html"
         class="action-btn">
@@ -432,15 +474,13 @@
       </a>
 
 
-      <!-- CONTRIBUTIONS -->
       <a
-        href="#"
+        href="contributions.html"
         class="action-btn">
         💰 Contributions
       </a>
 
 
-      <!-- TURNS -->
       <a
         href="#"
         class="action-btn">
@@ -448,7 +488,6 @@
       </a>
 
 
-      <!-- REPORTS -->
       <a
         href="#"
         class="action-btn">
@@ -511,10 +550,6 @@
       document.getElementById("infoContribution");
 
 
-    /*
-      CHECK LOGIN
-    */
-
     onAuthStateChanged(
       auth,
       async (user) => {
@@ -536,10 +571,6 @@
           user.email || "";
 
 
-        /*
-          GET USER DATA
-        */
-
         try {
 
           const userDoc =
@@ -553,7 +584,6 @@
             const data =
               userDoc.data();
 
-
             const contribution =
               Number(
                 data.contribution || 0
@@ -561,17 +591,13 @@
 
 
             myContribution.textContent =
-              contribution + " ETB";
+              contribution.toFixed(2) + " ETB";
 
             infoContribution.textContent =
-              contribution + " ETB";
+              contribution.toFixed(2) + " ETB";
 
           }
 
-
-          /*
-            GET TOTAL MEMBERS
-          */
 
           const snapshot =
             await getDocs(
@@ -599,10 +625,6 @@
       }
     );
 
-
-    /*
-      LOGOUT
-    */
 
     logoutBtn.addEventListener(
       "click",
