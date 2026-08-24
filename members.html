@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,110 +48,145 @@
       padding: 25px 20px 50px;
     }
 
-    .title-box {
+    .title {
       background: linear-gradient(135deg, #111827, #243b55);
       color: white;
       padding: 28px 22px;
-      border-radius: 18px;
-      margin-bottom: 25px;
+      border-radius: 17px;
+      margin-bottom: 22px;
     }
 
-    .title-box h1 {
+    .title h1 {
       margin-bottom: 8px;
     }
 
-    .title-box p {
+    .title p {
       color: #dbe3ef;
     }
 
-    .count {
-      margin-top: 12px;
-      font-weight: bold;
-      color: #f5b942;
-    }
-
-    .members {
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fit,
-        minmax(250px, 1fr)
-      );
-      gap: 18px;
-    }
-
-    .member {
+    .add-box,
+    .members-box {
       background: white;
       padding: 22px;
       border-radius: 15px;
       box-shadow: 0 5px 20px rgba(0,0,0,.07);
+      margin-bottom: 20px;
+    }
+
+    .add-box h2,
+    .members-box h2 {
+      margin-bottom: 18px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 13px;
+      border: 1px solid #d0d5dd;
+      border-radius: 9px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #f5b942;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 9px;
+      background: #f5b942;
+      color: #111827;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    .member-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .member {
+      display: grid;
+      grid-template-columns: 50px 1fr auto;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      border: 1px solid #eef0f4;
+      border-radius: 12px;
     }
 
     .avatar {
-      width: 55px;
-      height: 55px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       background: #f5b942;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
       font-weight: bold;
-      margin-bottom: 15px;
+      font-size: 18px;
     }
 
-    .member h3 {
-      margin-bottom: 7px;
+    .name {
+      font-weight: bold;
+      margin-bottom: 5px;
     }
 
     .email {
       color: #667085;
-      font-size: 14px;
+      font-size: 13px;
       word-break: break-word;
-      margin-bottom: 12px;
     }
 
-    .status {
-      display: inline-block;
-      padding: 5px 9px;
+    .count {
+      background: #111827;
+      color: white;
+      padding: 7px 11px;
       border-radius: 20px;
-      background: #dcfce7;
-      color: #166534;
-      font-size: 12px;
-      font-weight: bold;
+      font-size: 13px;
     }
 
-    .loading,
     .empty,
-    .error {
-      background: white;
-      padding: 30px;
+    .loading {
       text-align: center;
-      border-radius: 15px;
+      padding: 25px;
       color: #667085;
     }
 
-    .error {
-      color: #b91c1c;
-    }
-
     footer {
-      text-align: center;
-      padding: 25px;
       background: #111827;
       color: #9ca3af;
+      text-align: center;
+      padding: 25px;
     }
 
     @media (max-width: 600px) {
-      main {
-        padding: 18px 14px 40px;
+      .member {
+        grid-template-columns: 45px 1fr;
       }
 
-      .logo {
-        font-size: 19px;
+      .count {
+        grid-column: 2;
+        width: fit-content;
       }
     }
   </style>
 </head>
+
 
 <body>
 
@@ -171,29 +207,66 @@
 
   <main>
 
-    <section class="title-box">
+    <section class="title">
 
-      <h1>👥 Equb Members</h1>
+      <h1>
+        👥 Equb Members
+      </h1>
 
       <p>
-        View all registered members of your Digital Equb.
+        Manage the members of your Equb.
       </p>
-
-      <div
-        class="count"
-        id="memberCount">
-        Members: 0
-      </div>
 
     </section>
 
 
-    <section
-      class="members"
-      id="membersList">
+    <section class="add-box">
 
-      <div class="loading">
-        Loading members...
+      <h2>
+        ➕ Add Member
+      </h2>
+
+      <form id="memberForm">
+
+        <input
+          type="text"
+          id="name"
+          placeholder="Member name"
+          required>
+
+        <input
+          type="email"
+          id="email"
+          placeholder="Member email"
+          required>
+
+        <button
+          id="addBtn"
+          type="submit">
+          Add Member
+        </button>
+
+      </form>
+
+      <div id="message"></div>
+
+    </section>
+
+
+    <section class="members-box">
+
+      <h2>
+        📋 Members
+      </h2>
+
+      <div
+        id="memberList"
+        class="member-list">
+
+        <div class="loading">
+          Loading members...
+        </div>
+
       </div>
 
     </section>
@@ -209,20 +282,58 @@
   <script type="module">
 
     import {
-      collection,
-      getDocs
-    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+      getAuth,
+      onAuthStateChanged
+    }
+    from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
 
     import {
+      collection,
+      addDoc,
+      getDocs,
+      serverTimestamp
+    }
+    from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+    import {
+      app,
       db
-    } from "./firebase-config.js";
+    }
+    from "./firebase-config.js";
 
 
-    const membersList =
-      document.getElementById("membersList");
+    const auth = getAuth(app);
 
-    const memberCount =
-      document.getElementById("memberCount");
+
+    const form =
+      document.getElementById("memberForm");
+
+    const addBtn =
+      document.getElementById("addBtn");
+
+    const message =
+      document.getElementById("message");
+
+    const memberList =
+      document.getElementById("memberList");
+
+
+    onAuthStateChanged(
+      auth,
+      (user) => {
+
+        if (!user) {
+
+          window.location.replace(
+            "login.html"
+          );
+
+        }
+
+      }
+    );
 
 
     async function loadMembers() {
@@ -235,84 +346,89 @@
           );
 
 
-        membersList.innerHTML = "";
-
-        let total = 0;
+        memberList.innerHTML = "";
 
 
-        snapshot.forEach((doc) => {
+        if (snapshot.empty) {
 
-          const user = doc.data();
-
-          total++;
-
-
-          const name =
-            user.name || "Member";
-
-          const email =
-            user.email || "No email";
-
-          const firstLetter =
-            name.charAt(0).toUpperCase();
-
-
-          const card =
-            document.createElement("div");
-
-          card.className = "member";
-
-
-          card.innerHTML = `
-
-            <div class="avatar">
-              ${firstLetter}
-            </div>
-
-            <h3>
-              ${name}
-            </h3>
-
-            <div class="email">
-              ${email}
-            </div>
-
-            <span class="status">
-              ${user.status || "active"}
-            </span>
-
-          `;
-
-
-          membersList.appendChild(card);
-
-        });
-
-
-        memberCount.textContent =
-          "Members: " + total;
-
-
-        if (total === 0) {
-
-          membersList.innerHTML = `
+          memberList.innerHTML = `
             <div class="empty">
-              No members found.
+              No members yet.
             </div>
           `;
 
+          return;
         }
+
+
+        let number = 0;
+
+
+        snapshot.forEach(
+          (docItem) => {
+
+            const data =
+              docItem.data();
+
+            number++;
+
+
+            const name =
+              data.name || "Member";
+
+            const email =
+              data.email || "No email";
+
+
+            const member =
+              document.createElement("div");
+
+            member.className =
+              "member";
+
+
+            member.innerHTML = `
+
+              <div class="avatar">
+                ${name
+                  .charAt(0)
+                  .toUpperCase()}
+              </div>
+
+              <div>
+
+                <div class="name">
+                  ${name}
+                </div>
+
+                <div class="email">
+                  ${email}
+                </div>
+
+              </div>
+
+              <div class="count">
+                #${number}
+              </div>
+
+            `;
+
+
+            memberList.appendChild(
+              member
+            );
+
+          }
+        );
 
 
       } catch (error) {
 
         console.error(error);
 
-        membersList.innerHTML = `
-          <div class="error">
-            ❌ Could not load members.
-            <br><br>
-            Please check your Firebase settings.
+        memberList.innerHTML = `
+          <div class="empty">
+            ❌ Unable to load members.
           </div>
         `;
 
@@ -321,9 +437,87 @@
     }
 
 
+    form.addEventListener(
+      "submit",
+      async (event) => {
+
+        event.preventDefault();
+
+
+        const name =
+          document
+            .getElementById("name")
+            .value
+            .trim();
+
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
+
+
+        addBtn.disabled = true;
+
+        addBtn.textContent =
+          "Adding...";
+
+        message.textContent = "";
+
+
+        try {
+
+          await addDoc(
+            collection(db, "users"),
+            {
+              name: name,
+              email: email,
+              contribution: 0,
+              createdAt:
+                serverTimestamp()
+            }
+          );
+
+
+          message.style.color =
+            "green";
+
+          message.textContent =
+            "✅ Member added successfully!";
+
+
+          form.reset();
+
+
+          await loadMembers();
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          message.style.color =
+            "red";
+
+          message.textContent =
+            "❌ Could not add member.";
+
+        }
+
+
+        addBtn.disabled = false;
+
+        addBtn.textContent =
+          "Add Member";
+
+      }
+    );
+
+
     loadMembers();
 
   </script>
 
 </body>
+
 </html>
