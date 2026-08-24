@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Login - Equb</title>
+  <title>Login | Equb</title>
 
   <style>
     * {
@@ -18,9 +17,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 20px;
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #111827, #243b55);
-      padding: 20px;
     }
 
     .box {
@@ -29,12 +28,13 @@
       background: white;
       padding: 35px 25px;
       border-radius: 18px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      box-shadow: 0 15px 40px rgba(0,0,0,.25);
     }
 
     h1 {
       text-align: center;
       margin-bottom: 8px;
+      color: #111827;
     }
 
     .subtitle {
@@ -45,8 +45,8 @@
 
     label {
       display: block;
-      font-weight: bold;
       margin-bottom: 7px;
+      font-weight: bold;
     }
 
     input {
@@ -71,7 +71,7 @@
     }
 
     button:disabled {
-      opacity: 0.6;
+      opacity: .6;
     }
 
     #message {
@@ -80,23 +80,15 @@
       font-weight: bold;
     }
 
-    .register {
+    .links {
       text-align: center;
       margin-top: 20px;
-      color: #667085;
     }
 
-    a {
+    .links a {
       color: #111827;
       font-weight: bold;
       text-decoration: none;
-    }
-
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      color: #667085;
     }
   </style>
 </head>
@@ -108,7 +100,7 @@
     <h1>💰 Equb</h1>
 
     <p class="subtitle">
-      Welcome back
+      Login to your account
     </p>
 
     <form id="loginForm">
@@ -131,7 +123,7 @@
         required
       >
 
-      <button type="submit" id="loginBtn">
+      <button id="loginBtn" type="submit">
         Login
       </button>
 
@@ -139,14 +131,14 @@
 
     </form>
 
-    <div class="register">
+    <div class="links">
       Don't have an account?
       <a href="register.html">Create Account</a>
     </div>
 
-    <a href="index.html" class="back">
-      ← Back to Home
-    </a>
+    <div class="links">
+      <a href="index.html">← Back to Home</a>
+    </div>
 
   </div>
 
@@ -160,7 +152,6 @@
 
     import { app } from "./firebase-config.js";
 
-
     const auth = getAuth(app);
 
     const form =
@@ -173,9 +164,9 @@
       document.getElementById("message");
 
 
-    form.addEventListener("submit", async (event) => {
+    form.addEventListener("submit", async (e) => {
 
-      event.preventDefault();
+      e.preventDefault();
 
       const email =
         document.getElementById("email").value.trim();
@@ -183,13 +174,9 @@
       const password =
         document.getElementById("password").value;
 
-
-      message.textContent = "";
-
       button.disabled = true;
-
       button.textContent = "Logging in...";
-
+      message.textContent = "";
 
       try {
 
@@ -199,32 +186,33 @@
           password
         );
 
-
+        message.style.color = "green";
         message.textContent =
           "✅ Login successful!";
 
-        message.style.color = "green";
-
+        /*
+          IMPORTANT:
+          Go directly to dashboard.html
+        */
 
         setTimeout(() => {
 
-          window.location.href =
-            "dashboard.html";
+          window.location.replace(
+            "./dashboard.html"
+          );
 
-        }, 800);
-
+        }, 500);
 
       } catch (error) {
 
         console.error(error);
 
+        message.style.color = "red";
+
         message.textContent =
           "❌ Incorrect email or password.";
 
-        message.style.color = "red";
-
         button.disabled = false;
-
         button.textContent = "Login";
 
       }
@@ -234,4 +222,4 @@
   </script>
 
 </body>
-  </html>
+</html>
