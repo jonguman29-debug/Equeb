@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login - Equb</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #111827, #243b55);
+      padding: 20px;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      padding: 35px 25px;
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #667085;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 17px;
+      border: 1px solid #d0d5dd;
+      border-radius: 9px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 9px;
+      background: #f5b942;
+      color: #111827;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .register {
+      text-align: center;
+      margin-top: 20px;
+      color: #667085;
+    }
+
+    a {
+      color: #111827;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #667085;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+
+    <h1>💰 Equb</h1>
+
+    <p class="subtitle">
+      Welcome back
+    </p>
+
+    <form id="loginForm">
+
+      <label for="email">Email</label>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        required
+      >
+
+      <label for="password">Password</label>
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter your password"
+        required
+      >
+
+      <button type="submit" id="loginBtn">
+        Login
+      </button>
+
+      <div id="message"></div>
+
+    </form>
+
+    <div class="register">
+      Don't have an account?
+      <a href="register.html">Create Account</a>
+    </div>
+
+    <a href="index.html" class="back">
+      ← Back to Home
+    </a>
+
+  </div>
+
+
+  <script type="module">
+
+    import {
+      getAuth,
+      signInWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+    import { app } from "./firebase-config.js";
+
+
+    const auth = getAuth(app);
+
+    const form =
+      document.getElementById("loginForm");
+
+    const button =
+      document.getElementById("loginBtn");
+
+    const message =
+      document.getElementById("message");
+
+
+    form.addEventListener("submit", async (event) => {
+
+      event.preventDefault();
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+
+      message.textContent = "";
+
+      button.disabled = true;
+
+      button.textContent = "Logging in...";
+
+
+      try {
+
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+
+        message.textContent =
+          "✅ Login successful!";
+
+        message.style.color = "green";
+
+
+        setTimeout(() => {
+
+          window.location.href =
+            "dashboard.html";
+
+        }, 800);
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+          "❌ Incorrect email or password.";
+
+        message.style.color = "red";
+
+        button.disabled = false;
+
+        button.textContent = "Login";
+
+      }
+
+    });
+
+  </script>
+
+</body>
+  </html>
